@@ -1,0 +1,166 @@
+#!/bin/bash
+# Written by Jaewoon Jung, on 07/13/2022.
+# Some of the code used are based on the code written by Hyunju K. Connor.
+
+#Run example:
+#./mak.Msh_xray name 3 path jel 30 75 105 1 180 210 1 0 0 1
+#will make simulated X-ray emission measurement data observed from 30 Re away from the Earth in 'path'/'name'/data
+#and image in 'path'/'name'/ps
+
+RUN=${1}
+TI=${2}
+Dout=${3}
+model_bs=${4}
+
+# xsc=${5}		# s/c location in GSE [RE]
+# ysc=${6}
+# zsc=${7}
+# xlk=${8}		# s/c look direction in GSE [RE]
+# ylk=${9}
+# zlk=${10}
+dsc=${5}
+
+the1=${6}
+the2=${7}
+dthe=${8}
+phi1=${9}
+phi2=${10}
+dphi=${11}
+the1_=`expr $the1 - 90`
+the2_=`expr $the2 - 90`
+
+ran=xray,xray:$phi1:$phi2:10:2:$the1_:$the2_:10:2 #plot range
+
+XRAYPS=${12}	# plot ena
+MSHPY=${13} #Mshpy simulation
+ALL=${14}
+
+echo 1-5: $RUN, $TI, $Dout, $Dps, $model_bs, $dsc
+#echo 5-10: {$xsc, $ysc, $zsc}, {$xlk, $ylk, $zlk}
+echo 6-14: {$the1, $the2, $dthe}, {$phi1, $phi2, $dphi}, $XRAYPS, $MSHPY, $ALL
+
+###########################
+# MSHPY: Mshpy simulation
+###########################
+if [ $MSHPY -eq 1 ]; then
+  PYE=./xraysc_sight_Msh.py
+  Din=./modeling
+  Ddata=$Dout/xray.${RUN}/data
+
+  if [ ! -d "$Dout" ] ; then
+    mkdir $Dout
+  fi
+  LL=`echo $TI | awk '{printf "%06d", $1}'`
+  OP1="-xsc $xsc -ysc $ysc -zsc $zsc"
+  OP2="-xlk $xlk -ylk $ylk -zlk $zlk"
+  OP3="-the1 $the1 -the2 $the2 -dthe $dthe -phi1 $phi1 -phi2 $phi2 -dphi $dphi"
+  fout=$Ddata/$RUN.$LL
+  echo $PYE -path $Din $OP1 $OP2 $OP3 -fo $fout -model $model_bs
+  $PYE -path $Din $OP1 $OP2 $OP3 -fo $fout -model $model_bs
+fi
+
+
+####################################################################
+# PLOT XRAY RATES
+###################################################################
+
+if [ $XRAYPS -eq 1 ]; then
+  PYE=./plot_rates_Msh.py
+
+  Ddata=$Dout/xray.${RUN}/data
+  Dps=$Dout/xray.${RUN}/ps
+  if [ ! -d "$Dps" ] ; then
+   mkdir $Dps
+  fi
+  LL=`echo $TI | awk '{printf "%06d", $1}'`
+  TT2=`expr $TI + 1`
+  LL2=`echo $TT2 | awk '{printf "%06d", $1}'`
+
+  fin=$Ddata/$RUN.sc.$LL:$Ddata/$RUN.sc.$LL2
+
+  echo $fin
+  fbl=none
+  fmp=none
+
+  tash=0
+
+  echo python $PYE $Dps $fin $fbl $fmp $ran $tash
+  python $PYE $Dps $fin $fbl $fmp $ran $tash
+#   echo convert $fps -trim $fpng
+#   convert $fps -trim $fpng
+
+fi
+
+####################
+# ALL: MSHPY and plot
+##################
+if [ $ALL -eq 1 ]; then
+  PYE=./xraysc_sight_Msh.py
+  Din=./modeling
+  Ddata=$Dout/xray.${RUN}/data
+
+  if [ ! -d "$Dout" ] ; then
+    mkdir $Dout
+  fi
+  LL=`echo $TI | awk '{printf "%06d", $1}'`
+  TT2=`expr $TI + 1`
+  LL2=`echo $TT2 | awk '{printf "%06d", $1}'`
+
+  xsc=0
+  ysc=$dsc
+  zsc=0
+
+  xlk=0
+  ylk=-1
+  zlk=0
+
+  ysc2=0
+  zsc2=$dsc
+
+  ylk2=0
+  zlk2=-1
+
+  OP1="-xsc $xsc -ysc $ysc -zsc $zsc"
+  OP1_2="-xsc $xsc -ysc $ysc2 -zsc $zsc2"
+
+  OP2="-xlk $xlk -ylk $ylk -zlk $zlk"
+  OP2_2="-xlk $xlk -ylk $ylk2 -zlk $zlk2"
+
+  the1_2=`expr $phi1 - 90`
+  the2_2=`expr $phi2 - 90`
+  phi1_2=`expr $the1 + 90`
+  phi2_2=`expr $the2 + 90`
+
+  OP3="-the1 $the1 -the2 $the2 -dthe $dthe -phi1 $phi1 -phi2 $phi2 -dphi $dphi"
+  OP3_2="-the1 $the1_2 -the2 $the2_2 -dthe $dthe -phi1 $phi1_2 -phi2 $phi2_2 -dphi $dphi"
+
+  fout=$Ddata/$RUN.sc.$LL
+  fout_2=$Ddata/$RUN.sc.$LL2
+  echo $PYE -path $Din $OP1 $OP2 $OP3 -fo $fout -model $model_bs
+  $PYE -path $Din $OP1 $OP2 $OP3 -fo $fout -model $model_bs
+  echo $PYE -path $Din $OP1_2 $OP2_2 $OP3_2 -fo $fout_2 -model $model_bs
+  $PYE -path $Din $OP1_2 $OP2_2 $OP3_2 -fo $fout_2 -model $model_bs
+
+
+  PYE=./plot_rates_Msh.py
+
+  Ddata=$Dout/xray.${RUN}/data
+  Dps=$Dout/xray.${RUN}/ps
+  if [ ! -d "$Dps" ] ; then
+   mkdir $Dps
+  fi
+
+  fin=$Ddata/$RUN.sc.$LL:$Ddata/$RUN.sc.$LL2
+
+  echo $fin
+  fbl=none
+  fmp=none
+
+  tash=0
+
+  echo python $PYE $Dps $fin $fbl $fmp $ran $tash
+  python $PYE $Dps $fin $fbl $fmp $ran $tash
+#   echo convert $fps -trim $fpng
+#   convert $fps -trim $fpng
+
+fi
