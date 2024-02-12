@@ -4,6 +4,7 @@ import pandas as pd
 import sys
 from datetime import datetime,timedelta
 from matplotlib.dates import DateFormatter,AutoDateLocator
+from .sc_data import main as sc_data_read
 
 def rolling_ave(tt,vv,tave,dt,avetype='c'):
   "calculate centered average and previous value average                        \
@@ -38,7 +39,11 @@ def rolling_ave(tt,vv,tave,dt,avetype='c'):
 
 def main(argv):
     run=argv[0]
-    sc=argv[1]
+    ts=argv[1]
+    te=argv[2]
+    sc=argv[3]
+    
+    sc_data_read(run,ts,te,sc)
 
     fps1=f'{run}/{run}.Msh_model.png'
     fmsh=f'{run}/Msh_MHD_out.txt'
@@ -49,6 +54,7 @@ def main(argv):
 #    print(run,sc)
 
     if sc=='cluster4':
+        
 #        print('test')
         fc1=f'{run}/c4_fgm.lst'
         fc2=f'{run}/c4_cis.lst'
