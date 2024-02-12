@@ -9,7 +9,7 @@ In Python, run:
   from Mshpy import msh_param
 
 
-Then you can run msh_param as explained in the documentation.
+Then you can run msh_param as explained in the 'Usage'.
 
 ::
 
