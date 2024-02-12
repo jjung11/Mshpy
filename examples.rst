@@ -17,7 +17,7 @@ Then you can run msh_param as explained in the documentation.
   msh_param('test','2012-03-01T02:00','2012-03-01T04:00','cluster4',mpoff=0,bsoff=0.08)
 
 * path: File directory for output file.
-   For formats of each variable, see 'Usage' for the detail.
+   In case of using custom s/c trace file, see 'Usage' for the detail for the formats of each variable, .
 
 Note that model magnetopause and bow shock positions may not accurately represent the actual magnetopause and bow shock positions manual offset parameter may be needed after reviewing the satellite crossing data.
 
