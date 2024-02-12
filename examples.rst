@@ -24,6 +24,7 @@ Note that model magnetopause and bow shock positions may not accurately represen
 You can plot the result by following:
 
   from Mshpy import Msh_sc_data
+
   Msh_sc_data.main(['test','2012-03-01T02:00','2012-03-01T04:00','cluster4'])
 
 
