@@ -2,7 +2,7 @@
 
 The Mshpy module provides simplified magnetosheath model.
 See
-* Full [documentation](https://mshpy.readthedocs.io/en/latest/)
+* Full [documentation](https://mshpy-jj.readthedocs.io/en/latest/index.html)
 
 # Installation
 
