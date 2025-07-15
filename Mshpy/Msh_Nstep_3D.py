@@ -190,7 +190,7 @@ def SSCread(f):
 def genf(fun,nxyz,f,f2):
     outl=[]
     for i,j,k in zip(nxyz,f,f2):
-        if i[2][2]<0.1 or i[2][2]>0.9:
+        if i[2][2]<=0 or i[2][2]>=1:
             out=np.nan
         else:
             if k==-1:
