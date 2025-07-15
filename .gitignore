@@ -5,3 +5,4 @@ __pycache__/
 *.pyc
 modeling/
 Mshpy/modeling/
+Mshpy/msh_output.nc
