@@ -7,7 +7,7 @@ LONG_DESCRIPTION =  (this_directory / "README.md").read_text()
 
 setup(
     name='Mshpy',
-    version='0.0.42',
+    version='0.1.1',
     packages=find_packages(),
     package_data={'Mshpy': ['data/**/*']},
     description=DESCRIPTION,
