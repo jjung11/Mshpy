@@ -6,3 +6,5 @@ __pycache__/
 modeling/
 Mshpy/modeling/
 Mshpy/msh_output.nc
+Msh_3D_out.nc
+Mshpy/Msh_test_out.txt
