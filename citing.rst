@@ -1,4 +1,0 @@
-Citation Guide
-==============
-
-Under construction

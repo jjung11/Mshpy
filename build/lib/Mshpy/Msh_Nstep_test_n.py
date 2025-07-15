@@ -11,7 +11,6 @@ from scipy.interpolate import RegularGridInterpolator as RGI
 from scipy.spatial.transform import Rotation as R
 import glob
 import datetime
-import xarray as xr
 
 #For LNDI:
 #np.save('test',f)
@@ -213,53 +212,7 @@ def genf(fun,nxyz,f,f2):
     outl=np.array(outl)
     return outl
 
-
-def save_to_netcdf(filename, Bx, By, Bz, n, T, Vx, Vy, Vz, x, y, z):
-    ds = xr.Dataset(
-        {
-            "Bx": (("x", "y", "z"), Bx),
-            "By": (("x", "y", "z"), By),
-            "Bz": (("x", "y", "z"), Bz),
-            "n":  (("x", "y", "z"), n),
-            "T":  (("x", "y", "z"), T),
-            "Vx": (("x", "y", "z"), Vx),
-            "Vy": (("x", "y", "z"), Vy),
-            "Vz": (("x", "y", "z"), Vz),
-        },
-        coords={
-            "x": x,
-            "y": y,
-            "z": z
-        },
-        attrs={
-            "title": "Magnetosheath Output",
-            "description": "Interpolated plasma parameters on 3D grid",
-        }
-    )
-    # Add units
-    ds["Bx"].attrs = {"units": "nT", "long_name": "Magnetic field Bx"}
-    ds["By"].attrs = {"units": "nT", "long_name": "Magnetic field By"}
-    ds["Bz"].attrs = {"units": "nT", "long_name": "Magnetic field Bz"}
-
-    ds["n"].attrs = {"units": "cm^-3", "long_name": "Plasma number density"}
-    ds["T"].attrs = {"units": "eV", "long_name": "Plasma temperature"}
-
-    ds["Vx"].attrs = {"units": "km/s", "long_name": "Velocity X"}
-    ds["Vy"].attrs = {"units": "km/s", "long_name": "Velocity Y"}
-    ds["Vz"].attrs = {"units": "km/s", "long_name": "Velocity Z"}
-
-    ds["x"].attrs = {"units": "Re", "long_name": "GSE X"}
-    ds["y"].attrs = {"units": "Re", "long_name": "GSE Y"}
-    ds["z"].attrs = {"units": "Re", "long_name": "GSE Z"}
-
-    ds.to_netcdf(filename)
-    print(f"Saved NetCDF file: {filename}")
-    return ds
-
-def main(x,y,z,f_sw,fout,mpdo=0,bsdo=0,offsetf=0,model='jel'):
-    X, Y, Z = np.meshgrid(x, y, z, indexing='ij')  # shape: (25, 25, 25)
-    xyz = np.vstack([X.ravel(), Y.ravel(), Z.ravel()]).T  # shape: (N, 3)
-
+def main(xyz,f_sw,fout,mpdo=0,bsdo=0,offsetf=0,model='jel'):
     mpdo=float(mpdo)
     bsdo=float(bsdo)
     if offsetf!=0:
@@ -432,40 +385,27 @@ def main(x,y,z,f_sw,fout,mpdo=0,bsdo=0,offsetf=0,model='jel'):
 
     length=pts.shape[0]
 
-    grid_shape = X.shape  # (25, 25, 25)
+    out=pd.DataFrame({'time':omni.index,'Bx':Bx,'By':By,'Bz':Bz,'n':n,'Tev':T,'Vx':V[:,0],'Vy':V[:,1],'Vz':V[:,2],'f':pts_df.f,'x':pts_df.x,'y':pts_df.y,'z':pts_df.z,'mpd':mpd.flatten(),'bsd':bsd.flatten()})
+    out.to_csv(fout,float_format='%.3f',index=False)
 
-    Bx_grid = Bx.reshape(grid_shape)
-    By_grid = By.reshape(grid_shape)
-    Bz_grid = Bz.reshape(grid_shape)
-    n_grid  = n.reshape(grid_shape)
-    T_grid  = T.reshape(grid_shape)
-    Vx_grid = Vx.reshape(grid_shape)
-    Vy_grid = Vy.reshape(grid_shape)
-    Vz_grid = Vz.reshape(grid_shape)
-
-#    out=pd.DataFrame({'time':omni.index,'Bx':Bx,'By':By,'Bz':Bz,'n':n,'Tev':T,'Vx':V[:,0],'Vy':V[:,1],'Vz':V[:,2],'f':pts_df.f,'x':pts_df.x,'y':pts_df.y,'z':pts_df.z,'mpd':mpd.flatten(),'bsd':bsd.flatten()})
-#    out.to_csv(fout,float_format='%.3f',index=False)
-
-    ds=save_to_netcdf(fout, Bx_grid, By_grid, Bz_grid, n_grid, T_grid, Vx_grid, Vy_grid, Vz_grid, x, y, z)
 
 
 #    return pts_df
-    return ds
+    return Bx,By,Bz,n,T,Vx,Vy,Vz
+
 
 if __name__=="__main__":
     f_sw="SW_cond_test.txt"
-    # test=open(f_sw,"w")
-    # test.write("2003 124 12 30    1.01   -1.65   -0.78  -414.8   -21.8     0.7   7.54  2.60  24.3  7.7\n")
-    # #Year DOY HR MN Bx By Bz Vx Vy Vz n Pd Ma Mm, as in OMNIweb
-    # test.close()
+    test=open(f_sw,"w")
+    test.write("2003 124 12 30    1.01   -1.65   -0.78  -414.8   -21.8     0.7   7.54  2.60  24.3  7.7\n")
+    #Year DOY HR MN Bx By Bz Vx Vy Vz n Pd Ma Mm, as in OMNIweb
+    test.close()
 
     #f_sw='/Volumes/easystore/openggcm_run/Msh_Nstep/case_studies/2003May04_001/omni.lst'
-    x = np.linspace(-10, 20, 25)
-    y = np.linspace(-20, 20, 25)
-    z = np.linspace(-20, 20, 25) 
+    xyz=np.array([[12,2,3],[10,2,3]])
     #Orbit data from the SSWweb can be used as xyz. (filepath)
     #Data would be interpolated based on OMNI time.
     #xyz='/Volumes/easystore/openggcm_run/Msh_Nstep/case_studies/2003May04_001/cl_orbit.txt'
-    fout='Msh_3D_out.nc'
+    fout='Msh_test_out.txt'
     #fout='/Volumes/easystore/openggcm_run/Msh_Nstep/case_studies/2003May04_001/Msh_test_out.txt'
-    out=main(x,y,z,f_sw,fout)
+    main(xyz,f_sw,fout)

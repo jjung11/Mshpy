@@ -2,6 +2,7 @@ LICENSE
 README.md
 setup.py
 Mshpy/BSaMP.py
+Mshpy/Msh_Nstep_3D.py
 Mshpy/Msh_Nstep_Romashets.py
 Mshpy/Msh_Nstep_SMILE.py
 Mshpy/Msh_Nstep_SMILE_fig.py

@@ -446,7 +446,7 @@ def main(x,y,z,f_sw,fout,mpdo=0,bsdo=0,offsetf=0,model='jel'):
 #    out=pd.DataFrame({'time':omni.index,'Bx':Bx,'By':By,'Bz':Bz,'n':n,'Tev':T,'Vx':V[:,0],'Vy':V[:,1],'Vz':V[:,2],'f':pts_df.f,'x':pts_df.x,'y':pts_df.y,'z':pts_df.z,'mpd':mpd.flatten(),'bsd':bsd.flatten()})
 #    out.to_csv(fout,float_format='%.3f',index=False)
 
-    ds=save_to_netcdf(fout, Bx_grid, By_grid, Bz_grid, n_grid, T_grid, Vx_grid, Vy_grid, Vz_grid, x, y, z)
+    ds=save_to_netcdf("msh_output.nc", Bx_grid, By_grid, Bz_grid, n_grid, T_grid, Vx_grid, Vy_grid, Vz_grid, x, y, z)
 
 
 #    return pts_df
@@ -466,6 +466,6 @@ if __name__=="__main__":
     #Orbit data from the SSWweb can be used as xyz. (filepath)
     #Data would be interpolated based on OMNI time.
     #xyz='/Volumes/easystore/openggcm_run/Msh_Nstep/case_studies/2003May04_001/cl_orbit.txt'
-    fout='Msh_3D_out.nc'
+    fout='Msh_test_out.txt'
     #fout='/Volumes/easystore/openggcm_run/Msh_Nstep/case_studies/2003May04_001/Msh_test_out.txt'
     out=main(x,y,z,f_sw,fout)
