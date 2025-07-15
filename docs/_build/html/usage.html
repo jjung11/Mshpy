@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Usage &#8212; Mshpy 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=8d563738"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Magnetosheath Boundary Correction" href="msh_boundary_correction.html" />
+    <link rel="prev" title="Datasets" href="datasets.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h1>
+<p>Main function is Mshpy.msh_param, which provides magnetosheath parameters along certain spacecraft orbit.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ol class="arabic simple">
+<li><p>path: File directory to save outputs.</p></li>
+<li><p>Start time: in the format of ‘2012-03-01T02:00’</p></li>
+<li><p>End time: in the same format</p></li>
+<li><p>Spacecraft name. It should be same as one used in SscWs. See <a class="reference external" href="https://sscweb.gsfc.nasa.gov/WebServices/REST/jupyter/SscWsExample.html">https://sscweb.gsfc.nasa.gov/WebServices/REST/jupyter/SscWsExample.html</a>.</p></li>
+<li><dl class="simple">
+<dt>mpoff: Optional; Manual magnetopause offset along x axis.</dt><dd><p>Magnetopause model for the MHD-based MSH model is Shue et al. 1998.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>bsoff: Optional; Manual bow shock offset along x axis</dt><dd><p>Bow shock model for the MHD-based MSH model is Jelinek et al. 2012</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+<dt>Returns:</dt><dd><p>Following files are saved in the ‘path’.</p>
+</dd>
+</dl>
+<ol class="arabic">
+<li><p>Msh_MHD_out.txt: MHD-based model result.</p>
+<blockquote>
+<div><p>Format:</p>
+</div></blockquote>
+</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">time</span>   <span class="n">Bx</span><span class="p">[</span><span class="n">nT</span><span class="p">]</span>  <span class="n">By</span>  <span class="n">Bz</span>  <span class="n">n</span><span class="p">[</span><span class="n">cm</span><span class="o">^-</span><span class="mi">3</span><span class="p">]</span>    <span class="n">T</span><span class="p">[</span><span class="n">eV</span><span class="p">]</span>   <span class="n">Vx</span><span class="p">[</span><span class="n">km</span><span class="o">/</span><span class="n">s</span><span class="p">]</span>    <span class="n">Vy</span>  <span class="n">Vz</span>  <span class="n">f</span>   <span class="n">x</span><span class="p">[</span><span class="n">Re</span><span class="p">]</span>   <span class="n">y</span>   <span class="n">z</span>
+</pre></div>
+</div>
+<ol class="arabic" start="2">
+<li><p>Msh_Soucek_out.txt: Soucek &amp; Escoubet [2012] model plasma velocity results.</p>
+<blockquote>
+<div><p>Format:</p>
+</div></blockquote>
+</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">time</span>    <span class="n">x</span><span class="p">[</span><span class="n">Re</span><span class="p">]</span>   <span class="n">y</span>   <span class="n">z</span>   <span class="n">f</span>   <span class="n">Vx</span><span class="p">[</span><span class="n">km</span><span class="o">/</span><span class="n">s</span><span class="p">]</span>    <span class="n">Vy</span>  <span class="n">Vz</span>
+</pre></div>
+</div>
+<ol class="arabic" start="3">
+<li><p>Msh_Romashets_out.txt: Romashets et al. [2019] model magnetic field results.</p>
+<blockquote>
+<div><p>Format:</p>
+</div></blockquote>
+</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">time</span>    <span class="n">Bx</span><span class="p">[</span><span class="n">nT</span><span class="p">]</span>  <span class="n">By</span>  <span class="n">Bz</span>  <span class="o">|</span><span class="n">B</span><span class="o">|</span>
+</pre></div>
+</div>
+<ol class="arabic" start="4">
+<li><p>Msh_Spreiter_out.txt: Spreiter et al. [1966] model plasma speed, density, and temperature results.</p>
+<blockquote>
+<div><p>Format:</p>
+</div></blockquote>
+</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">time</span>    <span class="n">f</span>   <span class="n">n</span><span class="p">[</span><span class="n">cm</span><span class="o">^-</span><span class="mi">3</span><span class="p">]</span>    <span class="n">n</span><span class="p">[</span><span class="n">cm</span><span class="o">^-</span><span class="mi">3</span><span class="p">]</span>    <span class="n">T</span><span class="p">[</span><span class="n">eV</span><span class="p">]</span>   <span class="o">|</span><span class="n">V</span><span class="o">|</span><span class="p">[</span><span class="n">km</span><span class="o">/</span><span class="n">s</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Mshpy</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citing.html">Citation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="msh_boundary_correction.html">Magnetosheath Boundary Correction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="datasets.html" title="previous chapter">Datasets</a></li>
+      <li>Next: <a href="msh_boundary_correction.html" title="next chapter">Magnetosheath Boundary Correction</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2021, Jaewoong Jung.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/usage.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
