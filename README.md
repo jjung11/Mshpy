@@ -5,15 +5,9 @@ Mshpy is a Python module that provides a simplified magnetosheath model.
 - Full [documentation](https://mshpy-jj.readthedocs.io/en/latest/index.html)
 - Example usage: [Examples](https://mshpy-jj.readthedocs.io/en/latest/examples.html)
 
-## Installation
+# Installation
 
-Mshpy is available on PyPI:
-
-```bash
-pip install Mshpy
-```
-
-## Data Files
+## Installation including Data Files
 
 Some examples use large model output data files stored using Git LFS (https://git-lfs.com/).
 
