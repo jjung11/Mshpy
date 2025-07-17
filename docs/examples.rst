@@ -46,6 +46,21 @@ To generate 3D output:
 
   Year DOY HR MN Bx By Bz Vx Vy Vz n Pd Ma Mm
 
+
+Each column represents:
+
+- **Year**: Year of the measurement (e.g., 2025)  
+- **DOY**: Day of year (1–365/366)  
+- **HR**: Hour (0–23)  
+- **MN**: Minute (0–59)  
+- **Bx**, **By**, **Bz**: Interplanetary magnetic field components (nT, in GSE)  
+- **Vx**, **Vy**, **Vz**: Solar wind velocity components (km/s, in GSE)  
+- **n**: Proton number density (cm⁻³)  
+- **Pd**: Dynamic pressure (nPa)  
+- **Ma**: Alfvén Mach number  
+- **Mm**: Magnetosonic Mach number
+
+
 This format follows OMNIweb, for example:
 
 ::
