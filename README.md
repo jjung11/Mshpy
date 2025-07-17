@@ -24,6 +24,13 @@ If you cloned the repo before installing Git LFS, run:
 git lfs pull
 ```
 
+After cloning, install the package:
+
+```
+cd Mshpy
+pip install .
+```
+
 ## Example
 
 Example scripts and notebooks are available in the documentation:  
