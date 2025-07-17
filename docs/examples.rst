@@ -40,19 +40,15 @@ To generate 3D output:
   Msh_Nstep_3D.main(x, y, z, f_sw, fout)
 
 - `x`, `y`, `z`: 1D arrays (e.g., from `numpy.linspace`) defining the 3D spatial grid in GSE coordinates (Re).
-- `f_sw`: Input solar wind data file in the following format (one line per time step):
+- `f_sw`: Input solar wind data file in the following format :
 
 ::
 
-  Year DOY HR MN Bx By Bz Vx Vy Vz n Pd Ma Mm
+  Bx By Bz Vx Vy Vz n Pd Ma Mm
 
 
 Each column represents:
 
-- **Year**: Year of the measurement (e.g., 2025)  
-- **DOY**: Day of year (1–365/366)  
-- **HR**: Hour (0–23)  
-- **MN**: Minute (0–59)  
 - **Bx**, **By**, **Bz**: Interplanetary magnetic field components (nT, in GSE)  
 - **Vx**, **Vy**, **Vz**: Solar wind velocity components (km/s, in GSE)  
 - **n**: Proton number density (cm⁻³)  
@@ -65,7 +61,7 @@ This format follows OMNIweb, for example:
 
 ::
 
-  1967 1 0 00 2 -2 -5 -400 0 0 10 2 10 6
+  2 -2 -5 -400 0 0 10 2 10 6
 
 - `fout`: Output netCDF file name to store the computed plasma and magnetic field quantities on the 3D grid.
 
