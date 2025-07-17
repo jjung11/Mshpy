@@ -11,6 +11,8 @@ from scipy.interpolate import RegularGridInterpolator as RGI
 from scipy.spatial.transform import Rotation as R
 import glob
 import datetime
+import importlib.resources as pkg_resources
+import os
 
 #For LNDI:
 #np.save('test',f)
@@ -31,6 +33,28 @@ R0=11.8954
 R_0=15.02
 lam=1.17
 epsilon=6.55
+
+
+
+def load_model_file(i, folder='cn'):
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    modeling_dir = os.path.join(base_dir, '..', 'modeling', folder)
+    modeling_dir = os.path.abspath(modeling_dir)  # clean path
+
+    def f(name): 
+        return os.path.join(modeling_dir, f'Msh_{name}_{i}.npy')
+
+    bx1 = np.load(f('Bx'))
+    by1 = np.load(f('By'))
+    bz1 = np.load(f('Bz'))
+    rr1 = np.load(f('n'))
+    pp1 = np.load(f('pp'))
+    T1 = 72429 * pp1 / rr1 / 11600
+    vx1 = np.load(f('Vx'))
+    vy1 = np.load(f('Vy'))
+    vz1 = np.load(f('Vz'))
+
+    return bx1, by1, bz1, rr1, pp1, T1, vx1, vy1, vz1
 
 
 
@@ -302,15 +326,9 @@ def main(xyz,f_sw,fout,mpdo=0,bsdo=0,offsetf=0,model='jel'):
 
 
     for i in range(0,7):
-        bx1=np.load('./modeling/cn/Msh_Bx_%d.npy'%i)
-        by1=np.load('./modeling/cn/Msh_By_%d.npy'%i)
-        bz1=np.load('./modeling/cn/Msh_Bz_%d.npy'%i)
-        rr1=np.load('./modeling/cn/Msh_n_%d.npy'%i)
-        pp1=np.load('./modeling/cn/Msh_pp_%d.npy'%i)
-        T1=72429*pp1/rr1/11600
-        vx1=np.load('./modeling/cn/Msh_Vx_%d.npy'%i)
-        vy1=np.load('./modeling/cn/Msh_Vy_%d.npy'%i)
-        vz1=np.load('./modeling/cn/Msh_Vz_%d.npy'%i)
+        # Load from 'cn' folder
+        bx1, by1, bz1, rr1, pp1, T1, vx1, vy1, vz1 = load_model_file(0, folder='cn')
+
 
         Bxf=RGI((the,phi,af),bx1,bounds_error=False)
         Byf=RGI((the,phi,af),by1,bounds_error=False)
@@ -330,15 +348,9 @@ def main(xyz,f_sw,fout,mpdo=0,bsdo=0,offsetf=0,model='jel'):
         Vzfl.append(Vzf)
 
     for i in range(0,7):
-        bx1=np.load('./modeling/cs/Msh_Bx_%d.npy'%i)
-        by1=np.load('./modeling/cs/Msh_By_%d.npy'%i)
-        bz1=np.load('./modeling/cs/Msh_Bz_%d.npy'%i)
-        rr1=np.load('./modeling/cs/Msh_n_%d.npy'%i)
-        pp1=np.load('./modeling/cs/Msh_pp_%d.npy'%i)
-        T1=72429*pp1/rr1/11600
-        vx1=np.load('./modeling/cs/Msh_Vx_%d.npy'%i)
-        vy1=np.load('./modeling/cs/Msh_Vy_%d.npy'%i)
-        vz1=np.load('./modeling/cs/Msh_Vz_%d.npy'%i)
+
+        # Load from 'cs' folder
+        bx1, by1, bz1, rr1, pp1, T1, vx1, vy1, vz1 = load_model_file(0, folder='cs')
 
         Bxf=RGI((the,phi,af),bx1,bounds_error=False)
         Byf=RGI((the,phi,af),by1,bounds_error=False)

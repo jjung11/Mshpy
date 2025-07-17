@@ -9,7 +9,7 @@ setup(
     name='Mshpy',
     version='0.1.3',
     packages=find_packages(),
-    package_data={'Mshpy': ['data/**/*']},
+    package_data={'Mshpy': ['modeling/**/*']},
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',
