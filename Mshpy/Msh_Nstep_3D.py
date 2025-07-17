@@ -136,45 +136,55 @@ def mpdf(Pd,Bz,xyz):
     return R
 
 def OMNIread2(f):
+    BErr = 'nan'  # err of B field
+    VErr = 'nan'  # err of Velocity
+    NErr = 'nan'  # err of Number density
 
-    BErr='nan'          # err of B field
-    VErr='nan'          # err of Velocity
-    NErr='nan'               # err of Number density
+    Bx, By, Bz = [], [], []
+    vx, vy, vz = [], [], []
+    n, Pd, Ma, Mm = [], [], [], []
 
-    time,Bx,By,Bz,vx,vy,vz,n,Pd,Ma,Mm=[],[],[],[],[],[],[],[],[],[],[]
-    header1,header2=[],[]
-    list=glob.glob(f)
-    f0=open(list[0],'r')
-    for line in f0:
-        line=line.strip()
-        w=line.split()
-        if w[4]!=BErr and w[7]!=VErr and w[8]!=NErr:
-            time.append(datetime.datetime(int(w[0]),1,1)+datetime.timedelta(days=int(w[1])-1,hours=int(w[2]),minutes=int(w[3])))
-            Bx.append(float(w[4]))
-            By.append(float(w[5]))
-            Bz.append(float(w[6]))
-            vx.append(float(w[7]))
-            vy.append(float(w[8]))
-            vz.append(float(w[9]))
-            n.append(float(w[10]))
-            Pd.append(float(w[11]))
-            Ma.append(float(w[12]))
-            Mm.append(float(w[13]))
-    Bx=np.array(Bx)
-    By=np.array(By)
-    Bz=np.array(Bz)
-    vx=np.array(vx)
-    vy=np.array(vy)
-    vz=np.array(vz)
-    n=np.array(n)
-    Pd=np.array(Pd)
-    Ma=np.array(Ma)
-    Mm=np.array(Mm)
-    B_sw=np.sqrt(Bx**2+By**2+Bz**2)
-    V=np.sqrt(vx**2+vy**2+vz**2)
-    omni=pd.DataFrame({'datetime':time,'Bx':Bx,'By':By,'Bz':Bz,'V':V,'vx':vx,'vy':vy,'vz':vz,'n':n,'Pd':Pd,'Ma':Ma,'Mm':Mm,'B':B_sw})
+    file_list = glob.glob(f)
+    with open(file_list[0], 'r') as f0:
+        for line in f0:
+            line = line.strip()
+            w = line.split()
+            # Check errors on relevant columns
+            if w[0] != BErr and w[3] != VErr and w[6] != NErr:
+                Bx.append(float(w[0]))
+                By.append(float(w[1]))
+                Bz.append(float(w[2]))
+                vx.append(float(w[3]))
+                vy.append(float(w[4]))
+                vz.append(float(w[5]))
+                n.append(float(w[6]))
+                Pd.append(float(w[7]))
+                Ma.append(float(w[8]))
+                Mm.append(float(w[9]))
+
+    Bx = np.array(Bx)
+    By = np.array(By)
+    Bz = np.array(Bz)
+    vx = np.array(vx)
+    vy = np.array(vy)
+    vz = np.array(vz)
+    n = np.array(n)
+    Pd = np.array(Pd)
+    Ma = np.array(Ma)
+    Mm = np.array(Mm)
+
+    B_sw = np.sqrt(Bx**2 + By**2 + Bz**2)
+    V = np.sqrt(vx**2 + vy**2 + vz**2)
+
+    omni = pd.DataFrame({
+        'Bx': Bx, 'By': By, 'Bz': Bz,
+        'V': V,
+        'vx': vx, 'vy': vy, 'vz': vz,
+        'n': n, 'Pd': Pd, 'Ma': Ma, 'Mm': Mm,
+        'B': B_sw
+    })
+
     return omni
-
 def WINDread(f):
 
     BErr='9999.99'          # err of B field
@@ -470,10 +480,10 @@ def main(x,y,z,f_sw,fout,mpdo=0,bsdo=0,offsetf=0,model='jel'):
 
 if __name__=="__main__":
     f_sw="SW_cond_test.txt"
-    # test=open(f_sw,"w")
-    # test.write("2003 124 12 30    1.01   -1.65   -0.78  -414.8   -21.8     0.7   7.54  2.60  24.3  7.7\n")
-    # #Year DOY HR MN Bx By Bz Vx Vy Vz n Pd Ma Mm, as in OMNIweb
-    # test.close()
+    test=open(f_sw,"w")
+    test.write("    1.01   -1.65   -0.78  -414.8   -21.8     0.7   7.54  2.60  24.3  7.7\n")
+    #Bx By Bz Vx Vy Vz n Pd Ma Mm, as in OMNIweb
+    test.close()
 
     #f_sw='/Volumes/easystore/openggcm_run/Msh_Nstep/case_studies/2003May04_001/omni.lst'
     x = np.linspace(-10, 20, 25)
