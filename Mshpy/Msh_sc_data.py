@@ -5,6 +5,7 @@ import sys
 from datetime import datetime,timedelta
 from matplotlib.dates import DateFormatter,AutoDateLocator
 from .sc_data import main as sc_data_read
+import os
 
 def rolling_ave(tt,vv,tave,dt,avetype='c'):
   "calculate centered average and previous value average                        \
@@ -43,6 +44,10 @@ def main(argv):
     te=argv[2]
     sc=argv[3]
     
+    # Create output directory if it doesn't exist
+    if not os.path.exists(run):
+        os.makedirs(run)
+
     sc_data_read(run,ts,te,sc)
 
     fps1=f'{run}/{run}.Msh_model.png'
