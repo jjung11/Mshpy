@@ -15,28 +15,15 @@ def rolling_ave(tt,vv,tave,dt,avetype='c'):
    dt   : time duration of the moving average in seconds 			\
    avetype : c for centered average, p for averaging previous values 		"
 
-  v1 = np.zeros(len(tave))
-  n1 = np.zeros(len(tave))
-  if   avetype=='c':		# centered average
-   for i in range(len(vv)):
-#    print(vv[i])
-    if not np.isnan(vv[i]):
-     for j in range(len(tave)):
-#      print(type(tt[i]),type(tave[j]),type((dt)))
-#      print(i,tt[i],tave[j])
-      if tt[i]>=tave[j]-np.timedelta64(int(dt/2),'s') and tt[i] < tave[j]+np.timedelta64(int(dt/2),'s') :
-        v1[j]=v1[j]+vv[i]
-        n1[j]=n1[j]+1
-  elif avetype=='p':		# average of previous values
-   for i in range(len(vv)):
-    if not np.isnan(vv[i]):
-     for j in range(len(tave)):
-      if j<len(tave)-1:
-        if tt[i]>=tave[j] and tt[i] < tave[j+1] :
-          v1[j+1]=v1[j+1]+vv[i]
-          n1[j+1]=n1[j+1]+1
-  vave = [ v1[i]/n1[i] for i in range(len(v1)) ]
-  return vave
+  s = pd.Series(vv.values if hasattr(vv,'values') else vv, index=pd.DatetimeIndex(tt))
+  s = s[~np.isnan(s)]
+  tave_idx = pd.DatetimeIndex(tave)
+  if avetype=='c':
+    resampled = s.resample(f'{dt}s', origin=tave_idx[0]).mean()
+  else:
+    resampled = s.resample(f'{dt}s', origin=tave_idx[0], closed='left', label='right').mean()
+  resampled = resampled.reindex(tave_idx, method='nearest', tolerance=pd.Timedelta(seconds=dt))
+  return resampled.values
 
 def main(argv):
     run=argv[0]
