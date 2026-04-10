@@ -327,7 +327,7 @@ def main(xyz,f_sw,fout,mpdo=0,bsdo=0,offsetf=0,model='jel'):
 
     for i in range(0,7):
         # Load from 'cn' folder
-        bx1, by1, bz1, rr1, pp1, T1, vx1, vy1, vz1 = load_model_file(0, folder='cn')
+        bx1, by1, bz1, rr1, pp1, T1, vx1, vy1, vz1 = load_model_file(i, folder='cn')
 
 
         Bxf=RGI((the,phi,af),bx1,bounds_error=False)
@@ -350,7 +350,7 @@ def main(xyz,f_sw,fout,mpdo=0,bsdo=0,offsetf=0,model='jel'):
     for i in range(0,7):
 
         # Load from 'cs' folder
-        bx1, by1, bz1, rr1, pp1, T1, vx1, vy1, vz1 = load_model_file(0, folder='cs')
+        bx1, by1, bz1, rr1, pp1, T1, vx1, vy1, vz1 = load_model_file(i, folder='cs')
 
         Bxf=RGI((the,phi,af),bx1,bounds_error=False)
         Byf=RGI((the,phi,af),by1,bounds_error=False)
