@@ -11,7 +11,7 @@ import glob
 import datetime
 from scipy.interpolate import interp2d
 from astropy.io import fits
-import pkg_resources
+import importlib.resources as pkg_resources
 
 # Bow Shock
 a11=.45
@@ -211,9 +211,9 @@ def main(xyz,f_sw,fout,mpdo=0,bsdo=0,model='jel'):
     phi=np.arange(0,128)*np.pi/180
     af=np.arange(0,10)/10
 
-    n1=np.loadtxt(pkg_resources.resource_filename('Mshpy',f'data/Spreiter/Msh_n'))
-    T1=np.loadtxt(pkg_resources.resource_filename('Mshpy',f'data/Spreiter/Msh_T'))
-    V1=np.loadtxt(pkg_resources.resource_filename('Mshpy',f'data/Spreiter/Msh_V'))
+    n1=np.loadtxt(pkg_resources.files('Mshpy').joinpath('data/Spreiter/Msh_n'))
+    T1=np.loadtxt(pkg_resources.files('Mshpy').joinpath('data/Spreiter/Msh_T'))
+    V1=np.loadtxt(pkg_resources.files('Mshpy').joinpath('data/Spreiter/Msh_V'))
 
     nf=RGI((phi,af),n1,bounds_error=False)
     Tf=RGI((phi,af),T1,bounds_error=False)
