@@ -44,7 +44,7 @@ Returns:
         time    f   n[cm^-3]    n[cm^-3]    T[eV]   |V|[km/s]
 
 Custom trace usage
------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``Mshpy.msh_param_custom`` runs the MHD-based model on an arbitrary trace
 under a fixed or externally-supplied solar wind condition, rather than a
