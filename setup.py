@@ -14,7 +14,8 @@ setup(
     long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',
     install_requires=[
-        'sympy'
+        'sympy',
+        'sscws'
     ],
     include_package_data=True,
 )
