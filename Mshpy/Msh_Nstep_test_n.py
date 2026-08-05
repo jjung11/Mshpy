@@ -38,7 +38,7 @@ epsilon=6.55
 
 def load_model_file(i, folder='cn'):
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    modeling_dir = os.path.join(base_dir, '..', 'modeling', folder)
+    modeling_dir = os.path.join(base_dir, 'modeling', folder)
     modeling_dir = os.path.abspath(modeling_dir)  # clean path
 
     def f(name): 
