@@ -7,3 +7,5 @@ Mshpy/modeling/
 Mshpy/msh_output.nc
 Msh_3D_out.nc
 Mshpy/Msh_test_out.txt
+# Exported chat/session transcripts (YYYY-MM-DD-HHMMSS-*.txt)
+/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9]-*.txt
