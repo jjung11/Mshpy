@@ -202,7 +202,11 @@ def main(xyz,f_sw,fout,mpdo=0,bsdo=0,model='jel'):
     pts=np.hstack((pts,f_msh.reshape(pts.shape[0],1)))
 
     pts_df=pd.DataFrame(pts, columns=['x','y','z','r','theta','phi','f'])
-    pts_df['phi2']=np.absolute(pts_df.phi)
+    # Spreiter et al. (1966) is axisymmetric about the Sun-Earth line, so its
+    # tables are indexed by the zenith angle from +X (same angle mpdf and
+    # bsdf_Jelinek use above), not by the XY-plane azimuth |arctan2(y,x)|.
+    # The two only agree for z = 0; off the ecliptic the azimuth ignores z.
+    pts_df['phi2']=np.arctan2(np.sqrt(pts_df.y**2+pts_df.z**2),pts_df.x)
     input=pts_df[['phi2','f']].to_numpy()
 
     if (omni.n>35).any(): print('Warning: there is at least one time at which solar wind density goes above 35cm^-3, in which our model was not validated')
