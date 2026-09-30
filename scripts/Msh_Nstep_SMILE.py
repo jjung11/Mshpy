@@ -18,12 +18,12 @@ else:external='Elements'
 x=np.linspace(0,20)
 
 for i in range(1,7):
-    a=pd.read_csv('/Volumes/'+external+'/openggcm_run/'+run+'/modeling/Msh_data_0.1.'+str(1200+1200*i).zfill(6),header=None,sep='\s+',names=['the','phi','m','rad','x','y','z','bx1','by1','bz1','vx1','vy1','vz1','rr1','pp1','ex1','ey1','ez1','xjx1','xjy1','xjz1','resis1']).drop_duplicates()
+    a=pd.read_csv('/Volumes/'+external+'/openggcm_run/'+run+'/modeling/Msh_data_0.1.'+str(1200+1200*i).zfill(6),header=None,sep=r'\s+',names=['the','phi','m','rad','x','y','z','bx1','by1','bz1','vx1','vy1','vz1','rr1','pp1','ex1','ey1','ez1','xjx1','xjy1','xjz1','resis1']).drop_duplicates()
     a2=a[a.the==0]
     if argv[1]=='cs':
-        b=pd.read_csv('/Volumes/'+external+'/openggcm_run/'+run+'/sheath_data_ascii/cs%d.txt' % i,sep='\s+',header=None,names=['theta_1','theta_2','f_1','f_2','B','ni','Ti','V'],skiprows=1)
+        b=pd.read_csv('/Volumes/'+external+'/openggcm_run/'+run+'/sheath_data_ascii/cs%d.txt' % i,sep=r'\s+',header=None,names=['theta_1','theta_2','f_1','f_2','B','ni','Ti','V'],skiprows=1)
     else:
-        b=pd.read_csv('/Volumes/'+external+'/openggcm_run/'+run+'/sheath_data_ascii/cn%d.txt' % i,sep='\s+',header=None,names=['theta_1','theta_2','f_1','f_2','B','ni','Ti','V'],skiprows=1)
+        b=pd.read_csv('/Volumes/'+external+'/openggcm_run/'+run+'/sheath_data_ascii/cn%d.txt' % i,sep=r'\s+',header=None,names=['theta_1','theta_2','f_1','f_2','B','ni','Ti','V'],skiprows=1)
     b['phi1']=np.where(b.theta_1<=180,b.theta_1,b.theta_1-360)
     b['phi2']=np.where(b.theta_2<=180,b.theta_2,b.theta_2-360)
     b['phi']=(b.phi1+b.phi2)/2

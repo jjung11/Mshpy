@@ -155,7 +155,7 @@ def WINDread(f):
 
 def SSCread(f):
     dateparse=lambda x,y: pd.datetime.strptime(x+' '+y,'%y/%m/%d %H:%M:%S')
-    sat=pd.read_csv(f,header=None,sep='\s+',names=['d','t','x','y','z'],parse_dates={'datetime':[0,1]},date_parser=dateparse)
+    sat=pd.read_csv(f,header=None,sep=r'\s+',names=['d','t','x','y','z'],parse_dates={'datetime':[0,1]},date_parser=dateparse)
     sat.datetime=pd.to_datetime(sat.datetime)
     return sat
 

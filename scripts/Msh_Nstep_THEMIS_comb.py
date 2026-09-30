@@ -7,7 +7,7 @@ B=argv[1]
 
 df_list=[]
 for i in range(1,7):
-    b=pd.read_csv('/Volumes/easystore/openggcm_run/Msh_Nstep/sheath_data_ascii/'+B+'%d.txt' % i,sep='\s+',header=None,names=['theta_1','theta_2','f_1','f_2','B','ni','Ti','V'],skiprows=1)
+    b=pd.read_csv('/Volumes/easystore/openggcm_run/Msh_Nstep/sheath_data_ascii/'+B+'%d.txt' % i,sep=r'\s+',header=None,names=['theta_1','theta_2','f_1','f_2','B','ni','Ti','V'],skiprows=1)
     b['phi1']=np.where(b.theta_1<=180,b.theta_1,b.theta_1-360)
     b['phi2']=np.where(b.theta_2<=180,b.theta_2,b.theta_2-360)
     b['phi']=(b.phi1+b.phi2)/2

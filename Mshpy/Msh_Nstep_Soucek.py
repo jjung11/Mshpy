@@ -258,7 +258,7 @@ def OMNIread2(f):
 
 def SSCread(f):
     dateparse = lambda x, y: pd.to_datetime(x + ' ' + y, format='%y/%m/%d %H:%M:%S')
-    sat = pd.read_csv(f, header=None, sep='\s+', names=['d','t','x','y','z'])
+    sat = pd.read_csv(f, header=None, sep=r'\s+', names=['d','t','x','y','z'])
     sat['datetime'] = pd.to_datetime(sat['d'] + ' ' + sat['t'], format='%y/%m/%d %H:%M:%S')
     sat = sat.drop(['d', 't'], axis=1)
     return sat

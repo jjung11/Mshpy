@@ -62,7 +62,7 @@ def rate_vpkg(val):
 
   elif val=='dxray':
     cmap=plt.cm.bwr
-    name='$\Delta$ Q [10$^{20}$ cm$^{-4}$s$^{-1}$]'
+    name=r'$\Delta$ Q [10$^{20}$ cm$^{-4}$s$^{-1}$]'
     vran=[-0.5,0.5]
     nlev=51
     tick=0.1
@@ -120,7 +120,7 @@ def rate_vpkg(val):
 
   elif val=='dena':
     cmap=plt.cm.bwr
-    name='$\Delta$ ENA Flux [$10^3 cm^{-2}s^{-1}sr^{-1}keV^{-1}$]'
+    name=r'$\Delta$ ENA Flux [$10^3 cm^{-2}s^{-1}sr^{-1}keV^{-1}$]'
     name='[$10^3 cm^{-2}s^{-1}sr^{-1}keV^{-1}$]'
     vran=[-5.,5.]
     nlev=51
@@ -158,7 +158,7 @@ def rate_vpkg(val):
     cmap=plt.cm.hot
     cmap=plt.cm.jet
     name='ROSAT Xray count [$counts min^{-1} deg^{-2}$]'
-    name='[counts/$0.25^{2{}\circ}$pix/$2$ min]'
+    name=r'[counts/$0.25^{2{}\circ}$pix/$2$ min]'
     vran=[0.,150.]
     nlev=51
     tick=30.

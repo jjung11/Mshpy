@@ -13,7 +13,7 @@ def paper_info(runname):
            '(e) PC Area [${R_E}^2$]',               \
            '(f) CPCP[kV]',                          \
            '(g) MR Rates  [kV]',			\
-           '(h) Msheath $\mathbf{B}$ [nT]'          ]
+           r'(h) Msheath $\mathbf{B}$ [nT]'          ]
 
   if runname=='hjc-19970110-jr02'  or \
      runname=='hjc-19970110-jr01'  or \

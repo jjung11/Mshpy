@@ -586,8 +586,8 @@ def read_psf(fi,plot=False):
     cax1  = make_axes_locatable(ax1)
     cax2  = cax1.append_axes("right",size="3%",pad="5%")
     cb    = fig.colorbar(cs,cax=cax2,ticks=tlev)
-    ax1.set_xlabel("0.375$^{\circ}$ pixels")
-    ax1.set_ylabel("0.375$^{\circ}$ pixels")
+    ax1.set_xlabel(r"0.375$^{\circ}$ pixels")
+    ax1.set_ylabel(r"0.375$^{\circ}$ pixels")
     ax1.set_title('SMILE Point Spread Function')
     plt.savefig('test_psf.pdf')
 

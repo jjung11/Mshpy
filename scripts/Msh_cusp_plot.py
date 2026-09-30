@@ -6,8 +6,8 @@ fig, axes = plt.subplots(2,4,subplot_kw={'projection': 'polar'},figsize=(10,6))
 axes[1,3].axis("off")
 
 for i in range(1,8):
-    a=pd.read_csv('modeling/xz_cusp_cn_n.'+str(1200*i).zfill(6),header=None,sep='\s+',skiprows=1)
-    b=pd.read_csv('modeling/xz_cusp_cn_s.'+str(1200*i).zfill(6),header=None,sep='\s+',skiprows=1)
+    a=pd.read_csv('modeling/xz_cusp_cn_n.'+str(1200*i).zfill(6),header=None,sep=r'\s+',skiprows=1)
+    b=pd.read_csv('modeling/xz_cusp_cn_s.'+str(1200*i).zfill(6),header=None,sep=r'\s+',skiprows=1)
     ax=axes.flat[i-1]
     ax.plot(a[2]*np.pi/180,a[0])
     ax.plot(a[3]*np.pi/180,a[0])
